@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExamSphere - Online Examination</title>
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #101b3c, #263f70);
+    color: #222;
+    padding: 25px;
+}
+
+.container {
+    max-width: 850px;
+    margin: 35px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #263f70;
+}
+
+.logo span {
+    color: #ed8b35;
+}
+
+.subtitle {
+    color: #777;
+    margin-top: 8px;
+}
+
+h2 {
+    color: #263f70;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+label {
+    font-weight: 600;
+}
+
+button {
+    border: none;
+    padding: 13px 24px;
+    border-radius: 8px;
+    background: #ed8b35;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #d96f1c;
+    transform: translateY(-2px);
+}
+
+.primary {
+    width: 100%;
+    background: #263f70;
+}
+
+.primary:hover {
+    background: #172b52;
+}
+
+.hidden {
+    display: none;
+}
+
+.info {
+    background: #eef3ff;
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.exam-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.timer {
+    background: #ffe8e8;
+    color: #c62828;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.progress {
+    height: 8px;
+    background: #eee;
+    border-radius: 10px;
+    margin: 15px 0 25px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #ed8b35;
+    width: 0%;
+    transition: 0.3s;
+}
+
+.question {
+    border: 1px solid #e2e2e2;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.question h3 {
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.option {
+    display: block;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.option:hover {
+    background: #eef3ff;
+    border-color: #263f70;
+}
+
+.option input {
+    width: auto;
+    margin: 0 10px 0 0;
+}
+
+.result {
+    text-align: center;
+}
+
+.score {
+    font-size: 55px;
+    font-weight: bold;
+    color: #263f70;
+    margin: 20px 0;
+}
+
+.result-box {
+    background: #eef3ff;
+    padding: 22px;
+    border-radius: 12px;
+    margin: 20px 0;
+    line-height: 2;
+    text-align: left;
+}
+
+.footer {
+    text-align: center;
+    color: #888;
+    margin-top: 25px;
+    font-size: 13px;
+}
+
+@media(max-width:600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 22px;
+    }
+
+    .logo {
+        font-size: 26px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGIN PAGE -->
+    <section id="loginPage">
+
+        <header>
+            <div class="logo">Exam<span>Sphere</span></div>
+            <p class="subtitle">Smart Online Examination Portal</p>
+        </header>
+
+        <h2>Student Login</h2>
+
+        <div class="info">
+            Welcome to ExamSphere! Enter your details to begin your examination.
+        </div>
+
+        <form id="loginForm">
+
+            <label>Student Name</label>
+            <input type="text" id="studentName"
+                   placeholder="Enter your full name" required>
+
+            <label>Roll Number</label>
+            <input type="text" id="rollNumber"
+                   placeholder="Enter your roll number" required>
+
+            <button type="submit" class="primary">
+                Login & Continue →
+            </button>
+
+        </form>
+
+        <div class="footer">
+            © 2026 ExamSphere | Online Examination System
+        </div>
+
+    </section>
+
+    <section id="instructionPage" class="hidden">
+
+        <header>
+            <div class="logo">Exam<span>Sphere</span></div>
+        </header>
+
+        <h2>Examination Instructions</h2>
+
+        <div class="info">
+            <p>1. The examination contains 10 multiple-choice questions.</p>
+            <p>2. Each question carries 1 mark.</p>
+            <p>3. There is no negative marking.</p>
+            <p>4. Total examination time is 10 minutes.</p>
+            <p>5. The exam will be submitted automatically when time ends.</p>
+            <p>6. You can submit before the timer ends.</p>
+        </div>
+
+        <button class="primary" onclick="startExam()">
+            Start Examination
+        </button>
+
+    </section>
+
+    <section id="examPage" class="hidden">
+
+        <div class="exam-top">
+
+            <div>
+                <h2>Online Examination</h2>
+                <p id="welcomeText"></p>
+            </div>
+
+            <div class="timer" id="timer">10:00</div>
+
+        </div>
+
+        <p id="progressText">Answered: 0 / 10</p>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <form id="examForm">
+
+            <div id="questions"></div>
+
+            <button type="submit" class="primary">
+                Submit Examination
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section id="resultPage" class="hidden result">
+
+        <header>
+            <div class="logo">Exam<span>Sphere</span></div>
+            <h2>Examination Completed!</h2>
+        </header>
+
+        <p id="resultStudent"></p>
+
+        <div class="score" id="score">0/10</div>
+
+        <h3 id="resultMessage"></h3>
+
+        <div class="result-box">
+
+            <p><b>Total Questions:</b> 10</p>
+
+            <p><b>Correct Answers:</b>
+                <span id="correct"></span>
+            </p>
+
+            <p><b>Wrong Answers:</b>
+                <span id="wrong"></span>
+            </p>
+
+            <p><b>Unanswered:</b>
+                <span id="unanswered"></span>
+            </p>
+
+            <p><b>Percentage:</b>
+                <span id="percentage"></span>%
+            </p>
+
+        </div>
+
+        <button onclick="restartExam()" class="primary">
+            Take Another Exam
+        </button>
+
+        <div class="footer">
+            Thank you for using ExamSphere!
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+const quiz = [
+
+    {
+        question: "Which language is used to structure web pages?",
+        options: ["CSS", "HTML", "Java", "Python"],
+        answer: 1
+    },
+
+    {
+        question: "Which language is used for styling web pages?",
+        options: ["HTML", "Java", "CSS", "C"],
+        answer: 2
+    },
+
+    {
+        question: "Which language adds interactivity to websites?",
+        options: ["JavaScript", "HTML", "SQL", "CSS"],
+        answer: 0
+    },
+
+    {
+        question: "What does CPU stand for?",
+        options: [
+            "Central Processing Unit",
+            "Computer Personal Unit",
+            "Central Program Utility",
+            "Control Processing User"
+        ],
+        answer: 0
+    },
+
+    {
+        question: "Which tag creates a hyperlink in HTML?",
+        options: ["<p>", "<a>", "<h1>", "<img>"],
+        answer: 1
+    },
+
+    {
+        question: "Which symbol is used for comments in JavaScript?",
+        options: ["<!-- -->", "//", "**", "##"],
+        answer: 1
+    },
+
+    {
+        question: "Which keyword declares a constant in JavaScript?",
+        options: ["var", "let", "const", "static"],
+        answer: 2
+    },
+
+    {
+        question: "Which HTML tag displays an image?",
+        options: ["<image>", "<picture>", "<img>", "<src>"],
+        answer: 2
+    },
+
+    {
+        question: "Which CSS property changes text color?",
+        options: ["font-size", "color", "background", "text-style"],
+        answer: 1
+    },
+
+    {
+        question: "What does URL stand for?",
+        options: [
+            "Uniform Resource Locator",
+            "Universal Reference Link",
+            "Unified Resource Language",
+            "Uniform Reading Location"
+        ],
+        answer: 0
+    }
+
+];
+
+let student = "";
+let roll = "";
+let timeLeft = 600;
+let timerInterval;
+let submitted = false;
+
+function showPage(pageId) {
+
+    document.querySelectorAll(".container section")
+        .forEach(section => section.classList.add("hidden"));
+
+    document.getElementById(pageId)
+        .classList.remove("hidden");
+
+}
+
+document.getElementById("loginForm")
+    .addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        student = document.getElementById("studentName").value.trim();
+
+        roll = document.getElementById("rollNumber").value.trim();
+
+        if (!student || !roll) {
+            alert("Please enter your details.");
+            return;
+        }
+
+        showPage("instructionPage");
+
+    });
+
+
+function startExam() {
+
+    showPage("examPage");
+
+    document.getElementById("welcomeText").textContent =
+        "Student: " + student + " | Roll No: " + roll;
+
+    loadQuestions();
+
+    timeLeft = 600;
+
+    submitted = false;
+
+    updateTimer();
+
+    timerInterval = setInterval(function() {
+
+        timeLeft--;
+
+        updateTimer();
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timerInterval);
+
+            alert("Time is over! Your examination will be submitted.");
+
+            calculateResult();
+
+        }
+
+    }, 1000);
+
+}
+
+// Convert HTML-sensitive characters into visible text so tags such as <a>, <img>,
+// and comment syntax are displayed as quiz options instead of being parsed as HTML.
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, function(character) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[character];
+    });
+}
+
+function loadQuestions() {
+
+    const container = document.getElementById("questions");
+
+    container.innerHTML = "";
+
+    quiz.forEach((q, index) => {
+
+        let html = `
+            <div class="question">
+                <h3>${index + 1}. ${q.question}</h3>
+        `;
+
+        q.options.forEach((option, i) => {
+
+            html += `
+                <label class="option">
+                    <input type="radio"
+                        name="q${index}"
+                        value="${i}"
+                        onchange="updateProgress()">
+                    ${escapeHTML(option)}
+                </label>
+            `;
+
+        });
+
+        html += `</div>`;
+
+        container.innerHTML += html;
+
+    });
+
+    updateProgress();
+
+}
+
+
+function updateProgress() {
+
+    let answered = 0;
+
+    quiz.forEach((q, i) => {
+
+        if (document.querySelector(
+            'input[name="q' + i + '"]:checked'
+        )) {
+
+            answered++;
+
+        }
+
+    });
+
+    document.getElementById("progressText").textContent =
+        "Answered: " + answered + " / " + quiz.length;
+
+    document.getElementById("progressBar").style.width =
+        (answered / quiz.length * 100) + "%";
+
+}
+
+function updateTimer() {
+
+    let minutes = Math.floor(timeLeft / 60);
+
+    let seconds = timeLeft % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
+
+}
+
+
+document.getElementById("examForm")
+    .addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        calculateResult();
+
+    });
+
+
+function calculateResult() {
+
+    if (submitted) return;
+
+    submitted = true;
+
+    clearInterval(timerInterval);
+
+    let correct = 0;
+
+    let unanswered = 0;
+
+    quiz.forEach((q, index) => {
+
+        let selected = document.querySelector(
+            'input[name="q' + index + '"]:checked'
+        );
+
+        if (!selected) {
+
+            unanswered++;
+
+        }
+
+        else if (Number(selected.value) === q.answer) {
+
+            correct++;
+
+        }
+
+    });
+
+    let wrong = quiz.length - correct - unanswered;
+
+    let percentage = (correct / quiz.length) * 100;
+
+
+    document.getElementById("score").textContent =
+        correct + "/" + quiz.length;
+
+    document.getElementById("correct").textContent = correct;
+
+    document.getElementById("wrong").textContent = wrong;
+
+    document.getElementById("unanswered").textContent = unanswered;
+
+    document.getElementById("percentage").textContent =
+        percentage.toFixed(1);
+
+    document.getElementById("resultStudent").textContent =
+        "Student: " + student + " | Roll No: " + roll;
+
+    document.getElementById("resultMessage").textContent =
+        percentage >= 80 ? "Excellent Performance!" :
+        percentage >= 50 ? "Good Job! Keep Practicing!" :
+        "Keep Learning and Try Again!";
+
+    showPage("resultPage");
+
+}
+
+
+function restartExam() {
+
+    clearInterval(timerInterval);
+
+    document.getElementById("loginForm").reset();
+
+    showPage("loginPage");
+
+}
+
+</script>
+
+</body>
+</html>
